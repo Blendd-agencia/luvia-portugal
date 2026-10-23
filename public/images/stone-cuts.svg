@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="cuts" width="62" height="200" patternUnits="userSpaceOnUse" patternTransform="skewX(-20)"><path fill="#e74c39" d="M0 0h30v200H0z"/></pattern></defs><path fill="url(#cuts)" d="M0 0h200v200H0z"/></svg>
