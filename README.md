@@ -1,49 +1,61 @@
-# Luvia Portugal · Next.js
+# Luvia Portugal
 
-Primeira versão para revisão. Next.js App Router, TypeScript, CSS e exportação estática.
+Next.js App Router, TypeScript. Node.js 22+; `npm ci`; `npm run dev`.
+`npm run build` builds the Next.js application, including the server-side quote API.
+Static export is no longer used because email credentials must stay on the server.
 
-## Executar
+## Publication
 
-Node.js 22+; `npm ci`; `npm run dev`. Produção: `npm run build` gera `out/`.
+GitHub: Blendd-agencia/luvia-portugal. `staging` → Vercel preview; `main` → production.
+Preserve the Vercel project `luvia-portugal`, team `gads-5906s-projects` and existing domains.
+Vercel uses `vercel.json`: Next.js, `npm run build`, output `.next`.
+Only promote to main with the user's production authorization, after preview verification.
+Check the exact commit's Vercel deployment status and then the actual site.
 
-## Conteúdo
+## Quote email configuration
 
-- Quatro famílias e preços retirados da referência do cliente, em `lib/catalog.ts`.
-- Logótipo extraído do PDF de identidade. Paleta visual aproximada do PDF.
-- Fotografias de ambiente fornecidas anteriormente; imagens de produto extraídas da nova referência. Substituir os recortes por originais de alta resolução, especialmente Vein Cut, antes do lançamento.
-- Bordaduras de piscina disponíveis como interesse no formulário, sem atribuir especificações ou preços não fornecidos.
+Set server-only environment variables in Vercel (Preview and Production):
+- `RESEND_API_KEY`: sending-only key, restricted to the verified sender domain.
+- `QUOTE_FROM_EMAIL`: `Luvia <luvia@blendd.pt>` (blendd.pt was verified in Resend).
+- `QUOTE_TO_EMAILS`: `joaosousa@blendd.pt` initially; comma-separated recipients for future changes.
 
-## Pedidos de orçamento: integração pendente
+Do not put credentials in source, browser code, NEXT_PUBLIC variables, or chat.
+The old NEXT_PUBLIC_QUOTE_ENDPOINT is unused and may be removed from Vercel.
+Redeploy after environment changes. No Supabase or database is used.
 
-O formulário valida os dados e pré-seleciona a família ao clicar num produto. Sem `NEXT_PUBLIC_QUOTE_ENDPOINT`, informa que o envio não está disponível e nunca simula sucesso.
+POST `/api/quote/` checks same-origin requests, content type, bounded body size,
+required fields, consent and honeypot. A per-instance IP limiter provides basic
+mitigation only, not a distributed guarantee; configure a Vercel Firewall rate
+limit for this endpoint if abuse occurs. Resend idempotency avoids duplicate email
+on retries for the same submission and content. Server logs contain only provider
+status codes, never submitted contact details. Recipients and sender are server-configured;
+reply-to is the validated visitor email. Success means the provider accepted the email,
+not proof it reached the inbox. Verify a real submission and delivery event before release.
+If secrets are missing the API returns 503 and the form retains the visitor's fields.
 
-Configurar um endpoint público HTTPS que aceite POST JSON e devolva 2xx apenas depois de gravar/encaminhar o pedido. Deve permitir CORS do domínio final, validar e limitar os campos no servidor, aplicar controlo de abuso e proteger os dados. Não enviar segredos para o browser. O serviço destinatário e a caixa de email ainda não foram fornecidos; não há backend, CRM ou envio de emails ativos nesta versão.
+## Search indexing
 
-Campos: name, email, phone, postal_code, product, quantity, message, contact_permission, website (honeypot), attribution, source. `quantity` é m², exceto bordaduras (metros lineares). O honeypot é apenas uma proteção auxiliar. Há timeout e estados de erro/sucesso; nenhuma submissão foi feita a serviços externos.
+Only `VERCEL_ENV=production` permits indexing. Preview and local builds remain
+noindex, with robots disallow and an empty sitemap. Production has canonical
+https://luvia.pt/, robots.txt, sitemap.xml and Organization structured data.
+Verify production HTML, headers, robots and sitemap after release. Add/verify
+luvia.pt in Google Search Console, submit https://luvia.pt/sitemap.xml and request
+indexing for the homepage. Google controls indexing timing and ranking.
 
-UTMs/gclid são lidos da URL apenas no envio, sem armazenamento local. Após resposta 2xx, é emitido o evento de browser `luvia:quote-success`. Não existem tags GA4/Ads, cookies analíticos ou medição de conversões ativa. Só ligar tracking após definir a gestão de consentimento e testar com o endpoint final.
+## Product images
 
-## Antes do lançamento em luvia.pt
+Vein Cut gallery uses the four VEINCUT images supplied in Drive folder
+https://drive.google.com/drive/folders/1D3gXguetqPbWQpUPeXMpe2aQQFKhHqUV
+on 30 October 2026, resized/encoded as WebP without changing the depicted material.
+Files numbered 1, 2, 3, 4 correspond to VEINCUT 1, VEINCUT UNF1, VEINCUT UNF2,
+and VEINCUT2 respectively. No finish specifications are inferred from filenames.
+Other product photos are unchanged. Vein Cut is 64.90 EUR/m² including VAT;
+VAT on other families and commercial details remain subject to confirmation.
 
-1. Confirmar IVA, formatos/espessuras a que os preços se aplicam, condições comerciais, disponibilidade e entrega.
-2. Validar códigos: COM3, MIX e MOK seguem a última mensagem (a imagem indica STMIX/STMOK).
-3. Obter imagens originais dos quatro produtos e das bordaduras.
-4. Definir destinatário dos pedidos e configurar/testar endpoint, incluindo falhas e duplicados.
-5. Completar política de privacidade, identificação legal e contacto do responsável. O diálogo atual explica a finalidade mas não substitui a política completa.
-6. Retirar `robots: noindex` em `app/layout.tsx` e configurar metadataBase/canonical para https://luvia.pt apenas no lançamento.
-7. Publicar na conta de alojamento escolhida e apontar DNS. Esta versão não modifica o domínio luvia.pt.
+## Validation
 
-## Validação
-
-Executar `npm run typecheck` e `npm run build`. A revisão visual em browser e os testes de integração do formulário devem ser concluídos antes do lançamento público.
-
-## Atualização de identidade
-Tipografia confirmada em pattom.fr (CSS Elementor post-6): Bebas Neue nos títulos/botões e Figtree no texto. Fontes alojadas localmente. Logótipos SVG extraídos dos contornos vetoriais originais do PDF; cores digitais amostradas da sua renderização, sem afirmar conversão Pantone oficial.
-
-## Redesign claro · 15 outubro
-Manual revisto por inteiro: o PDF identifica Didot LT Std Bold e ITC Franklin Gothic Std Book nas aplicações. Os ficheiros completos/licenças web não foram fornecidos. Títulos usam Bodoni Moda (aproximação da família Didone, alojada localmente), texto usa Franklin Gothic Book quando instalada e Arial como fallback. Não se afirma que Bodoni é a fonte exata do manual. Tipografia Pattom removida. Fundos escuros removidos. Motivos SVG recriados a partir dos círculos, diagonais e ziguezagues do manual. Abertura dividida, fotografia sem sombreado e quatro famílias em grelha editorial de duas colunas, uma em mobile. Imagem Vein Cut continua a ser o recorte da referência fornecida, por substituir pelo original.
-
-## Identidade: pedra natural
-Removidos círculos decorativos, ondas e ziguezagues. Substituídos por módulos retangulares, juntas ortogonais e cortes retos. Tipografia, cores, contactos e catálogo mantidos.
-
-Grafismos ajustados à seleção anotada do cliente: moldura quadrada, quadrados desencontrados, triângulos e diagonais. Vein Cut: 64,90 €/m², IVA incluído; IVA dos restantes produtos por confirmar.
+`npm run typecheck`, `npm run build`, `node --test tests/*.test.mjs`.
+Check form success, provider failure, duplicate submission, honeypot, missing
+configuration, and mobile/desktop gallery interactions. Full legal privacy wording
+and retention policy still need client confirmation; the form describes its purpose,
+email processors, contact and NIF and does not subscribe to marketing.
