@@ -59,3 +59,28 @@ Check form success, provider failure, duplicate submission, honeypot, missing
 configuration, and mobile/desktop gallery interactions. Full legal privacy wording
 and retention policy still need client confirmation; the form describes its purpose,
 email processors, contact and NIF and does not subscribe to marketing.
+
+## Google Ads quote conversion
+
+Destination: `AW-18078478688/mnsTCPOd864dEODivqxD` (Luvia only).
+The client requires both a successful HTTP response and `{ok:true}` from the
+quote endpoint before calling `trackQuoteSuccess`. A synchronous ref locks
+concurrent submissions. The existing UUID is reused for retries and sent as
+`transaction_id`; memory and session storage suppress repeat conversion calls.
+Tracking failures do not turn an accepted quote into a form error.
+
+Basic consent mode: Google is not loaded before explicit measurement consent.
+The choice expires after 180 days and can be changed in the footer. Contact
+permission is separate. Ad personalization and Analytics remain denied. No form
+contact details, message, or invented lead value are sent to Google. Leads sent
+without measurement consent are not replayed later.
+
+Only production builds on `luvia.pt` / `www.luvia.pt` load the tag. Preview emits
+`luvia:conversion-preview` locally after a consenting successful submission and
+never sends test conversions to Ads. `node --test tests/*.test.mjs` covers error
+responses, consent, duplicate IDs, preview isolation and consent withdrawal.
+After production authorization, validate with Google Tag Assistant, including
+one successful submission, refusal, and failed submissions. A tag dispatch is
+not proof of ad attribution or a reported Ads conversion; blockers and consent
+can prevent measurement. The conversion remains secondary in Ads until the
+campaign team chooses otherwise. No campaign/account goals are modified here.

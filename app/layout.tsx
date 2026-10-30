@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { indexable, siteUrl } from '../lib/seo';
 import './globals.css';
+import AdsConsent from './ads-consent';
 const title = 'Luvia | Travertino e pedra natural em Portugal';
 const description = 'Descubra o travertino Luvia: Rustic, Mix, Light e Vein Cut. Pedra natural para interiores, exteriores e piscinas. Peça orçamento, com entregas em Portugal continental.';
 export const metadata: Metadata = {
@@ -18,5 +19,5 @@ const business = {
   address: { '@type': 'PostalAddress', streetAddress: 'Avenida dos Descobrimentos, 1193 B, sala 13', postalCode: '4400-103', addressLocality: 'Vila Nova de Gaia', addressCountry: 'PT' },
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <html lang="pt-PT"><body><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, '\\u003c') }}/>{children}</body></html>;
+  return <html lang="pt-PT"><body><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, '\\u003c') }}/>{children}<AdsConsent production={indexable}/></body></html>;
 }
