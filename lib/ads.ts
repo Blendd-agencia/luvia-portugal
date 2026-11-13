@@ -44,7 +44,7 @@ function applyConsent() {
   if (enabled && current.analytics && !gtmLoaded) {
     gtmLoaded = true;
     window.dataLayer!.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
-    appendScript('https://www.googletagmanager.com/gtm.js?id=GTM-WDMHHGHR');
+    appendScript('https://www.googletagmanager.com/gtm.js?id=GTM-WPKGJSCF');
   }
 }
 export function initializeAds(production: boolean) {
