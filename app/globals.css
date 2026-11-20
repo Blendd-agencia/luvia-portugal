@@ -106,3 +106,15 @@ footer:after{background-image:url('/images/stone-triangles.svg');width:110px;hei
 .cookie-preferences{display:block;margin:0 auto 24px;padding:8px 12px;background:transparent;border:0;text-decoration:underline;color:var(--muted);font-size:15px}.ads-consent{position:fixed;bottom:20px;left:20px;right:20px;z-index:90;max-width:1000px;margin:auto;padding:24px;background:var(--paper);border:1px solid var(--line);box-shadow:0 4px 30px #2d2a2626;display:flex;gap:24px;align-items:center}.ads-consent strong{font-size:19px}.ads-consent p{font-size:15px;line-height:1.6;margin:8px 0 0}.ads-consent a{text-decoration:underline}.consent-actions{display:flex;gap:12px;flex-shrink:0}.consent-actions button{padding:12px 16px;font-size:16px;border:1px solid var(--ink);background:#fff;color:var(--ink)}.consent-actions button:last-child{background:var(--cyan)}@media(max-width:760px){.ads-consent{bottom:12px;left:12px;right:12px;padding:18px;display:block;max-height:85vh;overflow:auto}.consent-actions{margin-top:16px}.consent-actions button{flex:1}}
 
 .product-thumbnails{right:126px;flex-wrap:wrap}.product-thumbnails button{flex-shrink:0}
+
+.stone-formats { grid-column: 1 / -1; min-width: 0; border: 0; padding: 0; margin: 18px 0 0; }
+.stone-formats legend { padding: 0; margin-bottom: 9px; font-weight: 600; }
+.format-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.format-options label { position: relative; cursor: pointer; }
+.format-options input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.format-tile { display: inline-flex; align-items: center; gap: 9px; padding: 12px; border: 1px solid var(--line); color: var(--ink); font-size: 15px; }
+.format-options input:checked + span { background: var(--ink); color: white; border-color: var(--ink); }
+.format-options input:focus-visible + span { outline: 3px solid #087980; outline-offset: 2px; }
+.format-tile i { width: 27px; height: 18px; border: 1px solid currentColor; display: inline-block; }
+.opus-icon { background: linear-gradient(currentColor,currentColor) 45% 0 / 1px 100%, linear-gradient(currentColor,currentColor) left 65% / 45% 1px, linear-gradient(currentColor,currentColor) right 35% / 55% 1px; background-repeat: no-repeat; }
+.stone-formats small { display: block; color: var(--muted); margin-top: 8px; }
