@@ -10,7 +10,7 @@ export const variants: Record<string, Variant[]> = {
   ],
   light: [
     { label: 'Opus de 4 formatos', sku: 'stmokop12', count: 6 },
-    { label: '40,6 × 61 cm', sku: 'stmok461', count: 6 },
+    { label: '40,6 × 61 cm', sku: 'stmok461', count: 3 },
   ],
   'vein-cut': [
     { label: 'Poro aberto', sku: 'mok361nrvc', count: 4 },
