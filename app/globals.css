@@ -132,6 +132,8 @@ footer:after{background-image:url('/images/stone-triangles.svg');width:110px;hei
 .opus-icon { background: linear-gradient(currentColor,currentColor) 45% 0 / 1px 100%, linear-gradient(currentColor,currentColor) left 65% / 45% 1px, linear-gradient(currentColor,currentColor) right 35% / 55% 1px; background-repeat: no-repeat; }
 .stone-formats small { display: block; color: var(--muted); margin-top: 8px; }
 
+.collection-card { display: flex; flex-direction: column; }
+.collection-card > .description { flex-grow: 1; }
 .collection-card .variant-heading { border: 0; padding-top: 0; }
 .variant-heading h3 { min-width: 0; }
 .variant-picker { margin: 10px 0 14px; }
