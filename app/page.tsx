@@ -35,8 +35,7 @@ export default function Page(){
    return <article key={p.id} className="collection-card">
      <div className="product-body variant-heading">
        <p className="eyebrow">{p.code} · TRAVERTINO</p><h3>Travertino {p.name}</h3>
-       <p className="product-tag">{p.tag}</p><p className="price">{euro(p.price)} <span>/ m²</span></p>
-       {vein && <p className="vat-note">IVA incluído</p>}
+       <p className="product-tag" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>{p.tag}{vein && <small style={{fontWeight: 400, color: 'var(--muted)'}}>IVA incluído</small>}</p><p className="price">{euro(p.price)} <span>/ m²</span></p>
      </div>
      <fieldset className="stone-formats variant-picker">
        <legend>{vein ? 'Escolha o acabamento' : 'Escolha o formato'}</legend>
