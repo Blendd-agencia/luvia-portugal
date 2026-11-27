@@ -127,11 +127,11 @@ footer:after{background-image:url('/images/stone-triangles.svg');width:110px;hei
 .variant-picker label:hover .format-tile { border-color: var(--ink); }
 .variant-gallery { margin: 0 0 16px; }
 .variant-frame { aspect-ratio: 4 / 3; overflow: hidden; background: #ece7df; }
-.variant-frame img { width: 100%; height: 100%; object-fit: contain; }
+.variant-frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .variant-gallery figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 10px 0; font-size: 15px; }
 .variant-gallery figcaption span { font-variant-numeric: tabular-nums; color: var(--muted); }
 .variant-strip { display: flex; flex-wrap: wrap; gap: 6px; }
-.variant-strip button { width: clamp(44px, 8vw, 65px); height: 46px; padding: 2px; background: none; border: 1px solid transparent; }
+.variant-strip button { width: clamp(56px, 8vw, 65px); aspect-ratio: 4 / 3; height: auto; padding: 2px; background: none; border: 1px solid transparent; }
 .variant-strip button[aria-pressed=true] { border: 2px solid var(--ink); padding: 1px; }
 .variant-strip img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 480px) {
